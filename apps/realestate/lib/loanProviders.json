@@ -1,0 +1,74 @@
+{
+    "status": 200,
+    "message": "Banks",
+    "data": {
+      "Banks": [
+        {
+          "id": 1,
+          "name": "Bank of Kigali",
+          "createdAt": "2021-12-13T08:25:03.018Z",
+          "updatedAt": "2021-12-13T08:25:03.018Z"
+        },
+        {
+          "id": 2,
+          "name": "Kenya Commercial Bank",
+          "createdAt": "2021-12-13T08:25:03.018Z",
+          "updatedAt": "2021-12-13T08:25:03.018Z"
+        },
+        {
+          "id": 3,
+          "name": "BPR",
+          "createdAt": "2021-12-13T08:25:03.018Z",
+          "updatedAt": "2021-12-13T08:25:03.018Z"
+        },
+        {
+          "id": 4,
+          "name": "Bank of Africa",
+          "createdAt": "2021-12-13T08:25:03.018Z",
+          "updatedAt": "2021-12-13T08:25:03.018Z"
+        },
+        {
+          "id": 5,
+          "name": "Zigama CSS",
+          "createdAt": "2021-12-13T08:25:03.018Z",
+          "updatedAt": "2021-12-13T08:25:03.018Z"
+        },
+        {
+          "id": 6,
+          "name": "NCBA Bank",
+          "createdAt": "2021-12-13T08:25:03.018Z",
+          "updatedAt": "2021-12-13T08:25:03.018Z"
+        },
+        {
+          "id": 7,
+          "name": "Mwarimu Sacco",
+          "createdAt": "2022-11-15T12:41:09.950Z",
+          "updatedAt": "2022-11-15T12:41:09.950Z"
+        },
+        {
+          "id": 8,
+          "name": "Any",
+          "createdAt": "2022-11-15T17:21:28.286Z",
+          "updatedAt": "2022-11-15T17:21:28.286Z"
+        },
+        {
+          "id": 9,
+          "name": "Muganga Sacco",
+          "createdAt": "2023-11-17T09:47:37.343Z",
+          "updatedAt": "2023-11-17T09:47:37.343Z"
+        },
+        {
+          "id": 10,
+          "name": "I&M Bank",
+          "createdAt": "2023-11-17T09:50:44.040Z",
+          "updatedAt": "2023-11-17T09:50:44.040Z"
+        },
+        {
+          "id": 11,
+          "name": "Equity Bank",
+          "createdAt": "2023-11-17T15:38:02.900Z",
+          "updatedAt": "2023-11-17T15:38:02.900Z"
+        }
+      ]
+    }
+  }

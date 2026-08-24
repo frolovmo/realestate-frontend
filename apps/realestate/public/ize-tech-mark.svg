@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">IZE Tech</title>
+  <rect width="64" height="64" rx="14" fill="#16083B"/>
+  <path d="M12.6 23.1A23.2 23.2 0 0 1 46.1 12.5" fill="none" stroke="#28CBEA" stroke-width="7" stroke-linecap="square"/>
+  <path d="M48.8 20A23.1 23.1 0 0 1 52.4 39.8" fill="none" stroke="#28CBEA" stroke-width="7" stroke-linecap="square"/>
+  <path d="M48.9 45A23.2 23.2 0 0 1 11.8 34.3" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="square"/>
+  <path d="m15.4 31.7 12 12.1L55.6 9 30.1 31.2Z" fill="#28CBEA"/>
+</svg>

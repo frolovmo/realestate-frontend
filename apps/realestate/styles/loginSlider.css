@@ -1,0 +1,45 @@
+.auth-swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.auth-swiper .swiper-slide {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background: transparent;
+}
+
+.auth-swiper .swiper-button-prev,
+.auth-swiper .swiper-button-next {
+  width: 38px;
+  height: 38px;
+  border: 1px solid hsl(var(--primary) / 0.28);
+  border-radius: 999px;
+  color: hsl(var(--primary));
+  background: hsl(var(--secondary) / 0.72);
+}
+
+.auth-swiper .swiper-button-prev::after,
+.auth-swiper .swiper-button-next::after {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.auth-swiper .swiper-pagination {
+  bottom: 38px !important;
+}
+
+.auth-swiper .swiper-pagination-bullet {
+  width: 7px;
+  height: 7px;
+  background: white;
+  opacity: 0.35;
+}
+
+.auth-swiper .swiper-pagination-bullet-active {
+  width: 24px;
+  border-radius: 999px;
+  background: hsl(var(--primary));
+  opacity: 1;
+}

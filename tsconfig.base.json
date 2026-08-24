@@ -1,0 +1,38 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["apps/realestate/*"], // This is reserved for Realestate
+      "@kataza/*": ["apps/kataza/*"],
+      "@uno/autoLogout": ["libs/autoLogout/src/index.ts"],
+      "@uno/autoLogout/server": ["libs/autoLogout/src/server.ts"],
+      "@uno/auth": ["libs/auth/src/index.ts"],
+      "@uno/auth/server": ["libs/auth/src/server.ts"],
+      "@uno/layout": ["libs/layout/src/index.ts"],
+      "@uno/layout/server": ["libs/layout/src/server.ts"],
+      "@uno/product": ["libs/product/src/index.ts"],
+      "@uno/product/server": ["libs/product/src/server.ts"],
+      "@uno/ui": ["libs/ui/src/index.ts"],
+      "@uno/ui/server": ["libs/ui/src/server.ts"],
+      "@uno/ticket": ["libs/ticket/src/index.ts"],
+      "@uno/ticket/server": ["libs/ticket/src/server.ts"],
+      "@uno/utils": ["libs/utils/src/index.ts"],
+      "@uno/utils/server": ["libs/utils/src/server.ts"],
+      "@procurement/*": ["apps/procurement/*"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

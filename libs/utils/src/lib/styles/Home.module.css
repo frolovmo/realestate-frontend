@@ -1,0 +1,25 @@
+.svgBackground {
+  background-color: #056333;
+  background-repeat: no-repeat;
+  background-size: 33%, 33%, 33%, 33%, 33%, 33%; /* Adjust sizes for each SVG */
+  background-position: bottom right, top right, top center, bottom center, top left, bottom left; /* Position each SVG */
+  background-image: 
+    url('/brd_design_assets/1.svg'),
+    url('/brd_design_assets/3.svg'),
+    url('/brd_design_assets/4.svg'),
+    url('/brd_design_assets/5.svg'),
+    url('/brd_design_assets/2.svg'),
+    url('/brd_design_assets/6.svg');
+  min-height: 100vh;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  width: 30%;
+}

@@ -1,0 +1,161 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .brand-grid {
+    background-image:
+      linear-gradient(hsl(var(--primary) / 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--primary) / 0.08) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .brand-glow {
+    background:
+      radial-gradient(circle at 18% 18%, hsl(var(--primary) / 0.24), transparent 30%),
+      radial-gradient(circle at 82% 82%, hsl(var(--primary) / 0.14), transparent 28%),
+      hsl(var(--secondary));
+  }
+}
+
+@layer base {
+  :root {
+    --background: 210 33% 98%;
+    --foreground: 257 76% 13%;
+    --primary: 190 82% 54%;
+    --primary-foreground: 257 76% 13%;
+    --secondary: 257 76% 13%;
+    --secondary-foreground: 0 0% 100%;
+    --success: 158 64% 35%;
+    --softblack: 257 42% 18%;
+    --softblack2: 218 13% 46%;
+    --lightdark: 220 16% 42%;
+    --lightgray: 210 33% 98%;
+    --lightgray2: 210 24% 93%;
+    --lightgray3: 207 38% 96%;
+    --gray: 215 20% 65%;
+    --gray-foreground: 220 16% 35%;
+    --grayvariant: 214 18% 80%;
+    --grayborder: 210 22% 88%;
+    --grayborder2: 210 18% 82%;
+    --graytext: 218 13% 58%;
+    --rejected: 0 72% 51%;
+    --activelink: 190 82% 91%;
+    --googlelink: 191 88% 34%;
+    --primaryneutral: 190 82% 96%;
+    --primaryneutral2: 211 35% 95%;
+    --successneutral: 158 35% 94%;
+    --rejectedneutral: 0 100% 96%;
+    --darkneutral: 257 36% 30%;
+    --orangelight: 40 96% 53%;
+
+    --status1: 156 36% 82%;
+    --status1-foreground: 155 52% 41%;
+    --status2: 0 0% 87%;
+    --status2-foreground: 0 0% 46%;
+    --status3: 39 100% 93%;
+    --status3-foreground: 37, 42%, 47%;
+    --status4: 218 79% 89%;
+    --status4-foreground: 220 78% 28%;
+    --status5: 5 59% 89%;
+    --status5-foreground: 5 59% 28%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 257 76% 13%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 257 76% 13%;
+    --muted: 210 28% 95%;
+    --muted-foreground: 218 13% 46%;
+    --accent: 190 82% 93%;
+    --accent-foreground: 257 76% 13%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 210 25% 88%;
+    --input: 210 25% 84%;
+    --ring: 191 88% 34%;
+    --chart-1: 190 82% 54%;
+    --chart-2: 257 76% 20%;
+    --chart-3: 158 64% 35%;
+    --chart-4: 39 92% 52%;
+    --chart-5: 0 72% 55%;
+    --radius: 0.75rem;
+  }
+  .dark {
+    --background: 257 76% 8%;
+    --foreground: 210 40% 98%;
+    --card: 257 58% 12%;
+    --card-foreground: 210 40% 98%;
+    --popover: 257 58% 12%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 190 82% 54%;
+    --primary-foreground: 257 76% 13%;
+    --secondary: 257 48% 22%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 190 82% 54%;
+    --chart-1: 190 82% 54%;
+    --chart-2: 190 68% 72%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  @font-face {
+    font-family: "PoppinsRegular";
+    font-weight: 400;
+    src: url("/fonts/PoppinsRegularWebfont") format("woff");
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: Poppins, Arial, Helvetica, sans-serif;
+  }
+
+  ::selection {
+    color: hsl(var(--secondary));
+    background: hsl(var(--primary) / 0.42);
+  }
+
+  a,
+  button,
+  input,
+  select,
+  textarea {
+    @apply transition-colors duration-200;
+  }
+
+  :focus-visible {
+    outline-color: hsl(var(--ring));
+  }
+}
+
+@layer components {
+  .surface-panel {
+    @apply rounded-2xl border border-border bg-white shadow-[0_18px_50px_-28px_rgba(22,8,59,0.35)];
+  }
+
+  .brand-kicker {
+    @apply inline-flex items-center rounded-full border border-primary/30 bg-primaryneutral px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-secondary;
+  }
+}

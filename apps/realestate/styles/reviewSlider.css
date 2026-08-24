@@ -1,0 +1,27 @@
+.review-swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.review-swiper .swiper-slide {
+  border-radius: 38px;
+  background-color: transparent;
+  padding: 1rem;
+  border: 1px solid black;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.review-swiper .swiper-button-prev:after,
+.review-swiper .swiper-button-next:after {
+  color: hsl(var(--secondary) / 0.35);
+}
+
+.review-swiper .swiper-pagination-bullet {
+  background-color: hsl(var(--primary)) !important;
+}
+
+.review-swiper .swiper-pagination {
+}
