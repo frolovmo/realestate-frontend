@@ -11,8 +11,12 @@ export const authLoginSchema = z.object({
 
 export const authRegisterSchema = z
   .object({
-    nationalId: z.string().trim().min(1, {
-      message: "National Id is required",
+    roleName: z.enum(["Applicant", "Property Developer"]),
+    firstName: z.string().trim().min(1, {
+      message: "First name is required",
+    }),
+    lastName: z.string().trim().min(1, {
+      message: "Surname is required",
     }),
     email: z.string().trim().min(1, {
       message: "Email is required",

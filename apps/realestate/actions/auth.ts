@@ -103,7 +103,9 @@ export async function signUp(
   _state: AuthFormState,
   formData: FormData
 ): Promise<any> {
-  const nationalId = formData.get("nationalId");
+  const roleName = formData.get("roleName");
+  const firstName = formData.get("firstName");
+  const lastName = formData.get("lastName");
   const email = formData.get("email");
   const phone = formData.get("phone");
   const password = formData.get("password");
@@ -120,9 +122,11 @@ export async function signUp(
       {
         method: "POST",
         body: JSON.stringify({
-          nationalId,
           email,
           phone,
+          roleName,
+          firstName,
+          lastName,
           password,
           confirmationPassword,
         }),
@@ -349,8 +353,8 @@ export async function getUserData(): Promise<UserData> {
   return {
     userId: userId || fullName,
     fullName,
-    firstname,
-    lastname: lastnameParts.join(" "),
+    firstname: (classicUser as any).firstName || firstname,
+    lastname: (classicUser as any).lastName || lastnameParts.join(" "),
     email: classicUser.email,
     phone: classicUser.phone,
     nationalId: classicUser.nationalId || "",

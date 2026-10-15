@@ -31,18 +31,21 @@ export default function LoginForm() {
     {
       name: "Google",
       url: process.env.NEXT_PUBLIC_GOOGLE_AUTH_URL,
+      enabled: process.env.NEXT_PUBLIC_ENABLE_GOOGLE_AUTH === "true",
       icon: <FcGoogle aria-hidden="true" className="text-xl" />,
       className: "border-input bg-white text-secondary hover:bg-muted/50",
     },
     {
       name: "Apple",
       url: process.env.NEXT_PUBLIC_APPLE_AUTH_URL,
+      enabled: process.env.NEXT_PUBLIC_ENABLE_APPLE_AUTH === "true",
       icon: <FaApple aria-hidden="true" className="text-xl" />,
       className: "border-black bg-black text-white hover:bg-black/85",
     },
     {
       name: "Facebook",
       url: process.env.NEXT_PUBLIC_FACEBOOK_AUTH_URL,
+      enabled: process.env.NEXT_PUBLIC_ENABLE_FACEBOOK_AUTH === "true",
       icon: (
         <FaFacebookF aria-hidden="true" className="text-lg text-[#1877f2]" />
       ),
@@ -175,7 +178,7 @@ export default function LoginForm() {
 
       <div className="space-y-3">
         {socialProviders.map((provider) =>
-          provider.url ? (
+          provider.enabled && provider.url ? (
             <a
               key={provider.name}
               href={providerUrl(provider.url)}
@@ -189,7 +192,7 @@ export default function LoginForm() {
               key={provider.name}
               type="button"
               disabled
-              title={`${provider.name} sign-in requires OAuth configuration`}
+              title={`${provider.name} sign-in is disabled`}
               className={`flex h-12 w-full cursor-not-allowed items-center justify-between rounded-lg border px-5 text-sm font-semibold opacity-55 ${provider.className}`}
             >
               <span>Continue with {provider.name}</span>

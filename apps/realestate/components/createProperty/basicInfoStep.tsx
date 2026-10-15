@@ -77,8 +77,9 @@ export default function BasicInfoStep({ onNextStep }: BasicInfoStepProps) {
                   international
                   withCountryCallingCode
                   placeholder="Phone number"
-                  value={field.value}
-                  onChange={field.onChange}
+                  value={field.value || ""}
+                  onChange={(value) => field.onChange(value || "")}
+                  onBlur={field.onBlur}
                   className="w-full p-2 border border-grayborder rounded-md"
                 />
               )}
@@ -130,7 +131,7 @@ export default function BasicInfoStep({ onNextStep }: BasicInfoStepProps) {
             Back
           </Button>
         </Link>
-        <Button variant="default" size="lg" onClick={onNextStep}>
+        <Button type="button" variant="default" size="lg" onClick={onNextStep}>
           Continue
         </Button>
       </div>

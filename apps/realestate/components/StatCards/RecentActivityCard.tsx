@@ -174,6 +174,11 @@ const RecentlyUpdatedPropertiesRow = async () => {
 
     return (
         <div className="flex flex-col gap-y-2">
+            {!latestUpdatedProperties.length && (
+                <div className="rounded-lg border border-dashed border-[#D9D9D9] bg-white p-6 text-sm text-[#707070]">
+                    No recent activity yet.
+                </div>
+            )}
             {
                 latestUpdatedProperties.map((recent: any, key: any) => {
                     return (

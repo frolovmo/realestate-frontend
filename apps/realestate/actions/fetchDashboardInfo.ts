@@ -4,7 +4,14 @@ import { authenticatedApiRequest } from "./authenticatedApi";
 
 async function getDashboard(path: string) {
   const response = await authenticatedApiRequest<any>(path);
-  if (!response.ok) throw new Error("Failed to fetch dashboard data");
+  if (!response.ok) {
+    const message =
+      response.data?.message ||
+      response.data?.error ||
+      `Dashboard request failed with status ${response.status}`;
+
+    throw new Error(message);
+  }
   return response.data;
 }
 

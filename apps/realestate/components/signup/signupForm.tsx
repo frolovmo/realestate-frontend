@@ -19,6 +19,13 @@ import { auth } from "@uno/utils";
 import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { basePath } from "../../lib/constants";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 type Inputs = typeof authRegisterSchema;
 
@@ -28,7 +35,9 @@ export default function SignUpForm() {
   const form = useForm<z.output<Inputs>>({
     resolver: zodResolver(authRegisterSchema),
     defaultValues: {
-      nationalId: "",
+      roleName: "Applicant",
+      firstName: "",
+      lastName: "",
       email: "",
       phone: "",
       password: "",
@@ -52,15 +61,19 @@ export default function SignUpForm() {
     try {
       const email = formData.get("email");
       const phone = formData.get("phone");
-      const nationalId = formData.get("nationalId");
+      const roleName = formData.get("roleName");
+      const firstName = formData.get("firstName");
+      const lastName = formData.get("lastName");
       const password = formData.get("password");
       const confirmationPassword = formData.get("confirmationPassword");
       const result = await axios.post(
         `${AUTH_BACKEND_API_URL}/api/auth/register/applicant`,
         {
-          nationalId,
           email,
           phone,
+          roleName,
+          firstName,
+          lastName,
           password,
           confirmationPassword,
         }
@@ -98,23 +111,74 @@ export default function SignUpForm() {
       className="space-y-4"
     >
       <div>
-        <InputName htmlFor="nationalId">National Id</InputName>
+        <InputName htmlFor="roleName">Role</InputName>
         <Controller
-          name="nationalId"
+          name="roleName"
+          control={form.control}
+          render={({ field }) => (
+            <Select
+              name="roleName"
+              value={field.value}
+              onValueChange={field.onChange}
+            >
+              <SelectTrigger id="roleName" className="mt-1 w-full">
+                <SelectValue placeholder="Select your role" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Applicant">Applicant</SelectItem>
+                <SelectItem value="Property Developer">
+                  Property Developer
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          )}
+        />
+        <input type="hidden" name="roleName" value={form.watch("roleName")} />
+        {form.formState.errors.roleName?.message && (
+          <div className="text-red-600 text-xs mt-2">
+            {`${form.formState.errors.roleName.message}`}
+          </div>
+        )}
+      </div>
+      <div>
+        <InputName htmlFor="firstName">First name</InputName>
+        <Controller
+          name="firstName"
           control={form.control}
           render={({ field }) => (
             <Input
               {...field}
-              name="nationalId"
-              placeholder="Enter your national Id"
+              id="firstName"
+              name="firstName"
+              placeholder="Enter your first name"
               className="mt-1 w-full"
-              onChange={field.onChange}
             />
           )}
         />
-        {form.formState.errors.nationalId?.message && (
+        {form.formState.errors.firstName?.message && (
           <div className="text-red-600 text-xs mt-2">
-            {`${form.formState.errors.nationalId.message}`}
+            {`${form.formState.errors.firstName.message}`}
+          </div>
+        )}
+      </div>
+      <div>
+        <InputName htmlFor="lastName">Surname</InputName>
+        <Controller
+          name="lastName"
+          control={form.control}
+          render={({ field }) => (
+            <Input
+              {...field}
+              id="lastName"
+              name="lastName"
+              placeholder="Enter your surname"
+              className="mt-1 w-full"
+            />
+          )}
+        />
+        {form.formState.errors.lastName?.message && (
+          <div className="text-red-600 text-xs mt-2">
+            {`${form.formState.errors.lastName.message}`}
           </div>
         )}
       </div>

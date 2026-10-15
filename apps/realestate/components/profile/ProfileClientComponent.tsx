@@ -1,6 +1,10 @@
 "use client";
 
+import { useState } from "react";
+
 import HeadingBar from "../headingBar/headingBar";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
 export default function ProfileClientComponent({ user }: { user: any }) {
   // const [profilePic, setProfilePic] = useState(user?.profileImage || null);
@@ -11,6 +15,48 @@ export default function ProfileClientComponent({ user }: { user: any }) {
   //   const imageUrl = URL.createObjectURL(file);
   //   setProfilePic(imageUrl);
   // };
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [message, setMessage] = useState("");
+  const [formValues, setFormValues] = useState({
+    firstName: user?.firstname || "",
+    lastName: user?.lastname || "",
+    phone: user?.phone || "",
+  });
+
+  const fullName =
+    `${formValues.firstName} ${formValues.lastName}`.trim() ||
+    user?.fullName ||
+    "User";
+
+  const updateField = (field: keyof typeof formValues, value: string) => {
+    setFormValues((current) => ({
+      ...current,
+      [field]: value,
+    }));
+  };
+
+  const saveProfile = async () => {
+    setMessage("");
+
+    const response = await fetch("/api/me", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formValues),
+    });
+    const data = await response.json().catch(() => null);
+
+    if (!response.ok) {
+      setMessage(data?.message || "Unable to update profile");
+      return;
+    }
+
+    setMessage("Profile updated");
+    setIsEditing(false);
+    window.location.reload();
+  };
 
   return (
     <main className="w-full h-full">
@@ -40,11 +86,11 @@ export default function ProfileClientComponent({ user }: { user: any }) {
                   {user?.profileImage ? (
                     <img src={user?.profileImage} alt="Profile" className="rounded-full w-full h-full object-cover" />
                   ) : (
-                    <span className="text-lg">{user?.fullName[0]}</span>
+                    <span className="text-lg">{fullName[0]}</span>
                   )}
                 </div>
                 <div className="font-poppins">
-                  <div className="font-semibold text-sm text-black">{user?.fullName}</div>
+                  <div className="font-semibold text-sm text-black">{fullName}</div>
                   <div className="text-[#707070] text-sm">{user?.roleName}</div>
                   <div className="text-[#B5B5B5] text-sm">{user?.address?.district} , {user?.address?.country}</div>
                 </div>
@@ -63,14 +109,65 @@ export default function ProfileClientComponent({ user }: { user: any }) {
             <div className="p-4 rounded-md border border-[#D9D9D9] flex flex-col gap-y-6">
               <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full lg:w-[70%]">
-                  <InfoField label="First Name" value={user?.firstname} />
-                  <InfoField label="Last Name" value={user?.lastname} />
-                  <InfoField label="Phone number" value={user?.phone} />
+                  {isEditing ? (
+                    <>
+                      <EditableField
+                        label="First Name"
+                        value={formValues.firstName}
+                        onChange={(value) => updateField("firstName", value)}
+                      />
+                      <EditableField
+                        label="Surname"
+                        value={formValues.lastName}
+                        onChange={(value) => updateField("lastName", value)}
+                      />
+                      <EditableField
+                        label="Phone number"
+                        value={formValues.phone}
+                        onChange={(value) => updateField("phone", value)}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <InfoField label="First Name" value={formValues.firstName} />
+                      <InfoField label="Surname" value={formValues.lastName} />
+                      <InfoField label="Phone number" value={formValues.phone} />
+                    </>
+                  )}
                   <InfoField label="Email" value={user?.email} />
                 </div>
-                {/* <Button type="button" variant="secondary" className="w-full sm:w-40 lg:w-52 mt-4 lg:mt-0">
-                  Update
-                </Button> */}
+                <div className="flex w-full flex-col gap-2 sm:w-40 lg:w-52">
+                  {isEditing ? (
+                    <>
+                      <Button type="button" variant="default" onClick={saveProfile}>
+                        Save
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="secondary"
+                        onClick={() => {
+                          setIsEditing(false);
+                          setMessage("");
+                        }}
+                      >
+                        Cancel
+                      </Button>
+                    </>
+                  ) : (
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      onClick={() => setIsEditing(true)}
+                    >
+                      Update
+                    </Button>
+                  )}
+                  {message && (
+                    <p className={message === "Profile updated" ? "text-xs text-green-600" : "text-xs text-red-600"}>
+                      {message}
+                    </p>
+                  )}
+                </div>
               </div>
               {/* <div>
                 <h1 className="text-gray">Bio</h1>
@@ -109,4 +206,23 @@ const InfoField = ({ label, value }: { label: string; value?: string }) => (
     <h1 className="text-gray text-xs">{label}</h1>
     <p className="text-black text-sm font-semibold">{value || "N/A"}</p>
   </div>
+);
+
+const EditableField = ({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+}) => (
+  <label className="flex flex-col">
+    <span className="text-gray text-xs">{label}</span>
+    <Input
+      value={value}
+      onChange={(event) => onChange(event.target.value)}
+      className="mt-1"
+    />
+  </label>
 );

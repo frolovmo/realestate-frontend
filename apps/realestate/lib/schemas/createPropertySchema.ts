@@ -12,6 +12,8 @@ export const CreatePropertySchema = z.object({
     .max(200, "200 characters is maximum"),
   phone: z
     .string()
+    .trim()
+    .min(1, "Phone contact is required")
     .refine(isValidPhoneNumber, { message: "Invalid phone number" }),
   email: z.string().min(1, "Email is required").email("Invalid email address"),
   images: z
