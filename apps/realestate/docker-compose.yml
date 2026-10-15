@@ -1,14 +1,8 @@
-version: '3.8'
 services:
   app:
-    image: openai-demo-app
+    image: realestate-frontend:local
     build:
-      context: ./
-      target: dev
-      dockerfile: Dockerfile
-    volumes:
-        - .:/app
-        - /app/node_modules
-        - /app/.next
+      context: ../..
+      dockerfile: apps/realestate/Dockerfile
     ports:
       - "3000:3000"

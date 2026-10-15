@@ -88,8 +88,7 @@ export const RWANDAN_DISTRICTS = [
 
 export const AUTHENTICATION_COOKIE = "Authentication";
 
-export const basePath =
-  process.env.NODE_ENV === "production" ? "/realestate" : "";
+export const basePath = "";
 
 export const UPLOAD_IMAGES_MAX_SIZE = Number(
   process.env.NEXT_PUBLIC_UPLOAD_IMAGES_MAX_SIZE!

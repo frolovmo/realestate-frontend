@@ -1,6 +1,7 @@
 //@ts-check
 
 const { composePlugins, withNx } = require("@nx/next");
+const path = require("path");
 
 const bucketName = process.env.BUCKET_NAME ? `/${process.env.BUCKET_NAME}` : "";
 const bucketPrefix = process.env.BUCKET_PREFIX
@@ -59,15 +60,19 @@ if (localFilePattern) {
   remotePatterns.push(localFilePattern);
 }
 
-const prefix = process.env.NODE_ENV === "production" ? "/realestate/" : "";
+const prefix = "";
 
 /**
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
  **/
 const nextConfig = {
+  output: "standalone",
   experimental: {
+    outputFileTracingRoot: path.join(__dirname, "../.."),
     serverActions: {
-      allowedOrigins: ["*.brd.rw"],
+      allowedOrigins: process.env.NEXT_PUBLIC_BASE_URL
+        ? [new URL(process.env.NEXT_PUBLIC_BASE_URL).host]
+        : [],
     },
   },
   async headers() {
@@ -84,6 +89,7 @@ const nextConfig = {
     ];
   },
   async rewrites() {
+    if (!bucketDomain) return [];
     return [
       {
         source: `${prefix}/bucket/pdf/:path*`,
@@ -102,10 +108,7 @@ const nextConfig = {
   assetPrefix: prefix,
   images: {
     loader: "default",
-    path:
-      process.env.NODE_ENV === "production"
-        ? "/realestate/_next/image"
-        : "/_next/image/",
+    path: "/_next/image",
     remotePatterns,
   },
   nx: {

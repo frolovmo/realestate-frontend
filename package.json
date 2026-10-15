@@ -59,6 +59,7 @@
     "react-phone-number-input": "^3.4.10",
     "react-simple-star-rating": "^5.1.7",
     "react-tooltip": "^5.28.1",
+    "sharp": "^0.33.5",
     "socket.io-client": "^4.8.1",
     "swiper": "^11.1.15",
     "tailwind-merge": "^2.5.2",
