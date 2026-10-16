@@ -1,0 +1,85 @@
+name: Build and Publish Image
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docker-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  image:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check publishing configuration
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        env:
+          NEXT_PUBLIC_BASE_URL: ${{ vars.NEXT_PUBLIC_BASE_URL }}
+          NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL }}
+        run: |
+          node <<'NODE'
+          for (const name of ['NEXT_PUBLIC_BASE_URL', 'NEXT_PUBLIC_API_URL']) {
+            const value = process.env[name];
+            if (!value) {
+              throw new Error(`Set repository variable ${name} under Settings > Secrets and variables > Actions > Variables.`);
+            }
+            const url = new URL(value);
+            if (url.protocol !== 'https:' || url.pathname !== '/' || url.search || url.hash || url.username || url.password) {
+              throw new Error(`${name} must be an HTTPS origin without a path, query, or credentials.`);
+            }
+            if (['localhost', '127.0.0.1', '[::1]'].includes(url.hostname)) {
+              throw new Error(`${name} must point to the deployed service, not localhost.`);
+            }
+          }
+          NODE
+      - uses: docker/setup-buildx-action@v3
+      - name: Set image name
+        id: image
+        run: echo "name=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_OUTPUT"
+      - name: Log in to GHCR
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Image metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ steps.image.outputs.name }}
+          tags: |
+            type=raw,value=main,enable=${{ github.ref == 'refs/heads/main' }}
+            type=sha,format=long
+            type=ref,event=pr
+      - name: Build and publish
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: apps/realestate/Dockerfile
+          platforms: linux/amd64
+          push: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            NEXT_PUBLIC_BASE_URL=${{ vars.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000' }}
+            NEXT_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_API_URL || 'http://localhost:8080' }}
+            NEXT_PUBLIC_AUTH_BACKEND_API_URL=${{ vars.NEXT_PUBLIC_API_URL || 'http://localhost:8080' }}
+            NEXT_PUBLIC_BACKEND_ORIGIN=${{ vars.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000' }}
+            NEXT_PUBLIC_FILE_STORAGE_API_URL=${{ vars.NEXT_PUBLIC_API_URL || 'http://localhost:8080' }}
+            NEXT_PUBLIC_SOCKET_SERVER_URL=${{ vars.NEXT_PUBLIC_API_URL || 'http://localhost:8080' }}
+            NEXT_PUBLIC_GOOGLE_MAPS_API=${{ vars.NEXT_PUBLIC_GOOGLE_MAPS_API }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
